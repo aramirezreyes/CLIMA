@@ -400,20 +400,11 @@ The optional input value of the temperature `T_init` is taken as the initial
 value of the saturation adjustment iterations.
 """
 function saturation_adjustment(e_int, ρ, q_t, T_init = T_triple)
-    tol_abs = 1e-3*cv_d
-    iter_max = 10
-    args = (ρ, q_t, e_int)
-    T0 = max(T_min, air_temperature(e_int, q_t, 0.0, 0.0))
-    T1 = air_temperature(e_int, q_t, 0.0, q_t)
-    roots_equation(x, ρ, q_t, e_int) = internal_energy_sat(x, ρ, q_t) - e_int
-    T, converged = find_zero(roots_equation,
-                             T0, T1,
-                             args,
-                             IterParams(tol_abs, iter_max),
-                             SecantMethod()
-                             )
-    return T
-
+  T0 = max(T_min, air_temperature(e_int, q_t, 0.0, 0.0))
+  T1 = air_temperature(e_int, q_t, 0.0, q_t)
+  T, converged = find_zero(x -> internal_energy_sat(x, ρ, q_t) - e_int,
+                           T0, T1, SecantMethod())
+  return T
 end
 
 """
