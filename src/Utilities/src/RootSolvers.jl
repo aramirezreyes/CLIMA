@@ -5,46 +5,12 @@ Module containing functions for solving roots of non-linear
 equations. See [`find_zero`](@ref).
 
 
-## Single example
-```
-julia> using RootSolvers
-x_0 = 0.0
-x_1 = 1.0
-f(x, y) = x^2 - y
-x_star2 = 10000.0
-args = Tuple(x_star2)
-x_star = sqrt(x_star2)
-tol_abs = 1.0e-3
-iter_max = 100
-
-x_root, converged = find_zero(f,
-                              x_0,
-                              x_1,
-                              args,
-                              IterParams(tol_abs, iter_max),
-                              SecantMethod())
-```
-
-## Broadcast example
-
-To broadcast, wrap arguments that need not be broadcasted in a Ref.
+## Example
 
 ```
-julia> using RootSolvers
-x_0 = rand(5,5)
-x_1 = rand(5,5).+2.0
-f(x, y) = x^2 - y
-x_star2 = 10000.0
-args = Tuple(x_star2)
-x_star = sqrt(x_star2)
-tol_abs = 1.0e-3
-iter_max = 100
-x_root, converged = find_zero.(f,
-                               x_0,
-                               x_1,
-                               Ref(args),
-                               Ref(IterParams(tol_abs, iter_max)),
-                               Ref(SecantMethod()))
+using CLIMA.Utilities.RootSolvers
+
+x_root, converged = find_zero(x -> x^2 - 100^2, 0.0, 1000.0, SecantMethod())
 ```
 
 """
@@ -74,6 +40,7 @@ The keyword arguments:
 - `xatol` and `xrtol` are the absolute and relative tolerances of the input.
 - `yatol` is the absolute tolerance of the output of `f`.
 - `maxiters` is the maximum number of iterations.
+
 """
 function find_zero end
 
