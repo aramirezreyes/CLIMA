@@ -13,6 +13,7 @@ include("ClimaAtmos/Dycore/src/CLIMAAtmosDycore.jl")
 include("ODESolvers/ODESolvers.jl")
 include("ODESolvers/LowStorageRungeKuttaMethod.jl")
 include("ODESolvers/GenericCallbacks.jl")
+include("DGmethods/DGBalanceLawDiscretizations.jl")
 
 
 end
